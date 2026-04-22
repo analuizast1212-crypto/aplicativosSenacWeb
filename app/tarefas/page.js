@@ -3,78 +3,68 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
+  const [tarefas, setTarefas] = useState([]);
+
   const [tarefa, setTarefa] = useState("");
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
   const [status, setStatus] = useState("Pendente");
-  const [lista, setLista] = useState([]);
-  const [editId, setEditId] = useState(null); // 👈 controle de edição
 
-  function adicionarTarefa(e) {
+  const [editId, setEditId] = useState(null);
+
+  // ADICIONAR OU EDITAR
+  function handleSubmit(e) {
     e.preventDefault();
 
-    if (!tarefa || !data || !hora) {
-      alert("Preencha todos os campos!");
-      return;
-    }
+    const novaTarefa = { tarefa, data, hora, status };
 
     if (editId !== null) {
-      // ✏️ ATUALIZAR ITEM
-      const novaLista = lista.map((item) =>
-        item.id === editId
-          ? { ...item, tarefa, data, hora, status }
-          : item
-      );
-
-      setLista(novaLista);
+      const novasTarefas = [tarefas];
+      novasTarefas[editId] = novaTarefa;
+      setTarefas(novasTarefas);
       setEditId(null);
     } else {
-      // ➕ ADICIONAR ITEM
-      const nova = {
-        id: Date.now(),
-        tarefa,
-        data,
-        hora,
-        status,
-      };
-
-      setLista([...lista, nova]);
+      setTarefas([...tarefas, novaTarefa]);
     }
 
-    // limpar campos
+    limparCampos();
+  }
+
+  // EDITAR
+  function handleEdit(index) {
+    const t = tarefas[index];
+    setTarefa(t.tarefa);
+    setData(t.data);
+    setHora(t.hora);
+    setStatus(t.status);
+    setEditId(index);
+  }
+
+  // REMOVER
+  function handleDelete(index) {
+    const novasTarefas = tarefas.filter((_, i) => i !== index);
+    setTarefas(novasTarefas);
+  }
+
+  // LIMPAR
+  function limparCampos() {
     setTarefa("");
     setData("");
     setHora("");
     setStatus("Pendente");
   }
 
-  function remover(id) {
-    setLista(lista.filter((item) => item.id !== id));
-  }
-
-  function editar(id) {
-    const item = lista.find((i) => i.id === id);
-    if (!item) return;
-
-    setTarefa(item.tarefa);
-    setData(item.data);
-    setHora(item.hora);
-    setStatus(item.status);
-
-    setEditId(id); // ativa modo edição
-  }
-
   return (
     <main className="min-h-screen bg-black p-6 flex justify-center">
       <div className="w-full max-w-4xl bg-white p-6 rounded-xl shadow">
-
-        {/* Título */}
-        <h1 className="text-2xl text-black font-bold mb-2">Minhas Tarefas</h1>
+        <h1 className="text-2xl text-black font-bold mb-2">
+          Minhas Tarefas
+        </h1>
         <p className="text-gray-500 mb-6">
           Gerencie suas tarefas de forma simples
         </p>
 
-        <form onSubmit={adicionarTarefa} className="space-y-4 bg-gray-400 rounded-2xl">
+        <form onSubmit={handleSubmit} className="space-y-4 bg-gray-400 rounded-2xl">
           <div className="mt-8 rounded-3xl bg-gray-400 p-4">
             <h1 className="text-2xl text-black font-bold mb-2">
               {editId !== null ? "Editar tarefa" : "Nova tarefa"}
@@ -84,10 +74,9 @@ export default function Home() {
               <label className="block font-medium text-black">Tarefa</label>
               <input
                 type="text"
-                placeholder="Descreva a tarefa..."
                 value={tarefa}
                 onChange={(e) => setTarefa(e.target.value)}
-                className="w-full text-black  border p-2 rounded"
+                className="w-full text-black border p-2 rounded"
               />
             </div>
 
@@ -132,7 +121,7 @@ export default function Home() {
           </div>
         </form>
 
-        {lista.length > 0 && (
+        {tarefas.length > 0 && (
           <div className="mt-8 rounded-2xl bg-gray-400 p-4">
             <h2 className="font-semibold mb-2 text-black">
               Tarefas cadastradas
@@ -150,22 +139,22 @@ export default function Home() {
               </thead>
 
               <tbody>
-                {lista.map((item) => (
-                  <tr key={item.id} className="border-t bg-gray-400">
+                {tarefas.map((item, index) => (
+                  <tr key={index} className="border-t bg-gray-400">
                     <td className="p-2">{item.tarefa}</td>
                     <td className="p-2">{item.data}</td>
                     <td className="p-2">{item.hora}</td>
                     <td className="p-2">{item.status}</td>
                     <td className="p-2">
                       <button
-                        onClick={() => remover(item.id)}
+                        onClick={() => handleDelete(index)}
                         className="text-blue-700"
                       >
                         Excluir
                       </button>
 
                       <button
-                        onClick={() => editar(item.id)}
+                        onClick={() => handleEdit(index)}
                         className="text-orange-500 ml-2"
                       >
                         Editar
