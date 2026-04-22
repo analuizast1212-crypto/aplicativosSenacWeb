@@ -56,6 +56,12 @@ export default function Home() {
           </button>
         </Link>
 
+        <Link href="/crud2">
+          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
+            CRUD 2
+          </button>
+        </Link>
+
         <Link href="/idade">
           <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
             Calculadora Idade

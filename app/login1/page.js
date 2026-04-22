@@ -21,6 +21,7 @@ export default function Login1() {
       <Link href="/ficha" className="bg-gray-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded text-center"> Ficha de Aluno</Link>
       <Link href="/idade" className="bg-gray-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded text-center"> Calculadora Idade</Link>
       <Link href="/crud" className="bg-gray-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded text-center"> CRUD</Link>
+      <Link href="/crud2" className="bg-gray-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded text-center"> CRUD 2</Link>
       <Link href="/abc" className="bg-gray-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded text-center"> Calculadora</Link>
       <Link href="/bhaskara" className="bg-gray-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded text-center"> Calculadora de Bhaskara</Link>
       <Link href="/celcius" className="bg-gray-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded text-center"> Conversor de Celsius</Link>  
