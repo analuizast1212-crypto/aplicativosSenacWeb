@@ -87,7 +87,7 @@ export default function Home() {
                 placeholder="Descreva a tarefa..."
                 value={tarefa}
                 onChange={(e) => setTarefa(e.target.value)}
-                className="w-full textp-black  border p-2 rounded"
+                className="w-full text-black  border p-2 rounded"
               />
             </div>
 
