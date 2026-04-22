@@ -87,7 +87,7 @@ export default function Home() {
                 placeholder="Descreva a tarefa..."
                 value={tarefa}
                 onChange={(e) => setTarefa(e.target.value)}
-                className="w-full border p-2 rounded"
+                className="w-full textp-black  border p-2 rounded"
               />
             </div>
 
@@ -98,7 +98,7 @@ export default function Home() {
                   type="date"
                   value={data}
                   onChange={(e) => setData(e.target.value)}
-                  className="w-full border p-2 rounded"
+                  className="w-full text-black border p-2 rounded"
                 />
               </div>
 
@@ -108,7 +108,7 @@ export default function Home() {
                   type="time"
                   value={hora}
                   onChange={(e) => setHora(e.target.value)}
-                  className="w-full border p-2 rounded"
+                  className="w-full text-black border p-2 rounded"
                 />
               </div>
             </div>
