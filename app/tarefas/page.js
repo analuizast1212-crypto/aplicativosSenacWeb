@@ -65,7 +65,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-500 p-6 flex justify-center">
+    <main className="min-h-screen bg-black p-6 flex justify-center">
       <div className="w-full max-w-4xl bg-white p-6 rounded-xl shadow">
 
         {/* Título */}
