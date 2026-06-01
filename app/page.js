@@ -1,105 +1,87 @@
-import Image from "next/image";
-import Link from "next/link";
+import AlunoForm from "@/componentes/alunoForm";
+import DeleteButton from "@/componentes/btnExcluir";
+import Modal from "@/componentes/BaseModal";
+import EditarForm from "@/componentes/frmEditar";
+import Dashboard from "@/componentes/dashboard";
+import Relatorio from "@/componentes/relatorio";
+import Adicionar from "@/componentes/adicionar";
+import { Get_All_Registros } from "@/modulos/alunosActions/pegartodos";
+import ModalEditar from "@/componentes/ModalEditar";
 
-export default function Home() {
+
+export default async function Home() {
+  const alunos = await Get_All_Registros();
   return (
-    <div className="flex flex-col items-center justify-center bg-black p-20 min-h-screen">
+    <main className="min-h-screen bg-black p-6 flex justify-center items-start">
+      <div className="w-full max-w-5xl bg-gray-750 p-6 rounded-2xl shadow-xl">
 
-      <div className="flex flex-col items-center p-10">      
-        <h1 className="text-4xl font-bold text-blue-300">
-          Olá, Seja Bem-vindo!
-        </h1>
-        <h2 className="text-xl font-semibold text-white">
-          Aplicativos Web do Curso Senac 2026
-        </h2>
-        <h3 className="text-xl font-semibold text-white">
-          Turma 027
-        </h3>
+        {/* HEADER */}
+        <div className="flex items-center justify-between mb-6 bg-gray-500 p-6 rounded-xl">
+          <h1 className="text-2xl text-white font-bold"> CRUD de Alunos </h1>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-xl transition">   Sobre o projeto </button>
+        </div>
+
+        {/* Botao */}
+        <div className="flex items-center justify-between w-full mb-4 font-bold font-">
+        <Relatorio />
+        <Adicionar />
+        </div>
+
+        {/* DASHBOARD */}
+        
+        <Dashboard />
+
+        {/* FORM */}
+        <section> <AlunoForm /> </section>
+
+        {/* TABELA */}
+        {alunos.length > 0 && (
+          <div className="mt-8 bg-gray-500 p-6 rounded-xl">
+            <h2 className="text-white font-semibold mb-4"> Alunos cadastrados </h2>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left text-gray-200">
+                <thead className="bg-gray-600 text-white">
+                  <tr>
+                    <th className="p-3">Nome</th>
+                    <th className="p-3">Email</th>
+                    <th className="p-3">Matrícula</th>
+                    <th className="p-3">Curso</th>
+                    <th className="p-3">Nascimento</th>
+                    <th className="p-3">Sexo</th>
+                    <th className="p-3">Turno</th>
+                    <th className="p-3 text-center">Ações</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {alunos.map((aluno) => (
+                    <tr key={aluno.id} className="bg-gray-700 border-b border-gray-500 hover:bg-gray-500 transition" >
+                      <td className="p-3">{aluno.nome}</td>
+                      <td className="p-3">{aluno.email}</td>
+                      <td className="p-3">{aluno.matricula}</td>
+                      <td className="p-3">{aluno.curso}</td>
+                      <td className="p-3">{aluno.nascimento}</td>
+                      <td className="p-3">{aluno.sexo}</td>
+                      <td className="p-3">{aluno.turno}</td>
+
+                      <td className="p-3">
+                        <div className="flex justify-center items-center gap-2">
+
+                         <ModalEditar aluno={aluno} /> 
+
+                         <DeleteButton id={aluno.id} />
+
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Container dos botões */}
-      <div className="flex flex-col items-center space-y-4 bg-black p-10 rounded-lg shadow-lg">
-
-        <Link href="/cliente">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Cadastro de cliente
-          </button>
-        </Link>
-
-        <Link href="/produto">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Produto
-          </button>
-        </Link>
-
-        <Link href="/fornecedor">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Fornecedor
-          </button>
-        </Link>
-
-        <Link href="/IMC">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            IMC
-          </button>
-        </Link>
-
-        <Link href="/ficha">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Ficha
-          </button>
-        </Link>
-
-        <Link href="/crud">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            CRUD
-          </button>
-        </Link>
-
-        <Link href="/crud2">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            CRUD 2
-          </button>
-        </Link>
-
-        <Link href="/idade">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Calculadora Idade
-          </button>
-        </Link>
-
-        <Link href="/abc">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Calculadora
-          </button>
-        </Link>
-
-        <Link href="/bhaskara">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Fórmula de Bhaskara
-          </button>
-        </Link>
-
-        <Link href="/Celsius">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Conversor de Temperatura
-          </button>
-        </Link>
-
-        <Link href="/login">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Login
-          </button>
-        </Link>
-
-        <Link href="/tarefas">
-          <button className="bg-blue-600 hover:bg-blue-500 text-white w-48 font-bold py-2 rounded">
-            Tarefas
-          </button>
-        </Link>
-
-      </div>
-
-    </div>
+    </main>
   );
 }
